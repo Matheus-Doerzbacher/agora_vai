@@ -10,7 +10,7 @@ typedef AuthHeaderProvider = String? Function();
 
 class ApiClient {
   AuthHeaderProvider? authHeaderProvider;
-  final _baseUrl = 'http://localhost:8080';
+  final _baseUrl = 'http://10.0.2.2:8080';
 
   final _print = PrintCustom('ApiClient');
 

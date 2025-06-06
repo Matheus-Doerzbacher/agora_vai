@@ -1,11 +1,15 @@
 class UsuarioCreate {
-  final String nome;
+  final String name;
   final String email;
-  final String senha;
+  final String password;
 
-  UsuarioCreate({required this.nome, required this.email, required this.senha});
+  UsuarioCreate({
+    required this.name,
+    required this.email,
+    required this.password,
+  });
 
   Map<String, dynamic> toMap() {
-    return {'nome': nome, 'email': email, 'senha': senha};
+    return {'name': name, 'email': email, 'password': password};
   }
 }

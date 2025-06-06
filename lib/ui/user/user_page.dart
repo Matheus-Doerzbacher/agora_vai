@@ -26,7 +26,7 @@ class _UserPageState extends State<UserPage> {
               child: CircleAvatar(
                 radius: 50,
                 child: Text(
-                  usuario.nome.substring(0, 1).toUpperCase(),
+                  usuario.name.substring(0, 1).toUpperCase(),
                   style: const TextStyle(fontSize: 32),
                 ),
               ),
@@ -46,7 +46,7 @@ class _UserPageState extends State<UserPage> {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    _buildInfoRow('Nome', usuario.nome),
+                    _buildInfoRow('Nome', usuario.name),
                     _buildInfoRow('Email', usuario.email),
                     _buildInfoRow('ID', usuario.idUsuario.toString()),
                   ],

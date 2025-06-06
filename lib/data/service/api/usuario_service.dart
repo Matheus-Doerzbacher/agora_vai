@@ -4,6 +4,8 @@ import 'package:agora_vai/data/service/api/model/usuario/usuario_create.dart';
 import 'package:agora_vai/domain/model/usuario.dart';
 import 'package:result_dart/result_dart.dart';
 
+const String _path = '/api/user';
+
 class UsuarioService {
   final ApiClient _apiClient;
 
@@ -13,10 +15,7 @@ class UsuarioService {
 
   AsyncResult<Usuario> create(UsuarioCreate usuario) async {
     try {
-      final result = await _apiClient.post(
-        '/api/usuarios',
-        body: usuario.toMap(),
-      );
+      final result = await _apiClient.post(_path, body: usuario.toMap());
 
       return result.fold(
         (success) {
@@ -35,7 +34,7 @@ class UsuarioService {
 
   AsyncResult<List<Usuario>> getAll() async {
     try {
-      final result = await _apiClient.get('/api/usuarios');
+      final result = await _apiClient.get(_path);
       return result.fold(
         (success) {
           final usuarios = success.map((e) => Usuario.fromMap(e)).toList();

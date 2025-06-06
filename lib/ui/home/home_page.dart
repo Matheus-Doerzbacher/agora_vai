@@ -1,4 +1,6 @@
 import 'package:agora_vai/routing/routes.dart';
+import 'package:agora_vai/ui/compromisso/compromisso_page.dart';
+import 'package:agora_vai/ui/compromisso/compromisso_viewmodel.dart';
 import 'package:agora_vai/ui/lembrete/lembrete_page.dart';
 import 'package:agora_vai/ui/lembrete/lembrete_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +14,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final lembreteViewModel = context.read<LembreteViewModel>();
+    final compromissoViewModel = context.read<CompromissoViewModel>();
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -41,7 +44,7 @@ class HomePage extends StatelessWidget {
           // children: <Widget>[LembretePage(), CompromissoPage()],
           children: [
             LembretePage(viewModel: lembreteViewModel),
-            const Center(child: Text('Compromissos')),
+            CompromissoPage(viewModel: compromissoViewModel),
           ],
         ),
       ),

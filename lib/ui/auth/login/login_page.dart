@@ -51,9 +51,9 @@ class _LoginPageState extends State<LoginPage> {
       if (_isCreated) {
         widget.viewModel.createUser.execute(
           UsuarioCreate(
-            nome: _nameController.text,
+            name: _nameController.text,
             email: _emailController.text.toLowerCase(),
-            senha: _passwordController.text,
+            password: _passwordController.text,
           ),
         );
       } else {

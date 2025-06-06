@@ -1,4 +1,5 @@
 import 'package:agora_vai/data/repository/auth_repository.dart';
+import 'package:agora_vai/data/repository/compromisso_repository.dart';
 import 'package:agora_vai/data/repository/lembrete_repository.dart';
 import 'package:agora_vai/data/repository/usuario_repository.dart';
 import 'package:provider/provider.dart';
@@ -19,5 +20,9 @@ List<SingleChildWidget> respositoryProviders = [
   ),
   Provider(
     create: (context) => UsuarioRepository(usuarioService: context.read()),
+  ),
+  Provider(
+    create: (context) =>
+        CompromissoRepository(compromiCompromissoService: context.read()),
   ),
 ];
