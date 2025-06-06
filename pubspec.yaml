@@ -16,12 +16,14 @@ dependencies:
   result_command: ^1.3.0
   shared_preferences: ^2.5.3
   http: ^1.4.0
+  provider: ^6.1.5
+  go_router: ^15.1.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutterando_analysis: ^0.0.1
+  flutterando_analysis: ^0.0.2
 
 flutter:
   uses-material-design: true

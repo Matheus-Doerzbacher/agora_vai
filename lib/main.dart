@@ -1,8 +1,12 @@
-import 'package:agora_vai/data/service/api/api_client.dart';
+import 'package:agora_vai/config/provider.dart';
+import 'package:agora_vai/data/repository/auth_repository.dart';
+import 'package:agora_vai/routing/router.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(MultiProvider(providers: providers, child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -11,39 +15,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    final authRepository = context.read<AuthRepository>();
+    return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  final _apiClient = ApiClient();
-
-  @override
-  void initState() {
-    super.initState();
-    _apiClient.get('/api/user');
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: const Center(child: Text('Hello, World!')),
+      routerConfig: router(authRepository),
     );
   }
 }
