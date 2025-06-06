@@ -1,6 +1,9 @@
 import 'package:agora_vai/routing/routes.dart';
+import 'package:agora_vai/ui/lembrete/lembrete_page.dart';
+import 'package:agora_vai/ui/lembrete/lembrete_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -8,6 +11,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final lembreteViewModel = context.read<LembreteViewModel>();
     return DefaultTabController(
       initialIndex: 1,
       length: 2,
@@ -32,11 +36,11 @@ class HomePage extends StatelessWidget {
             ],
           ),
         ),
-        body: const TabBarView(
+        body: TabBarView(
           // children: <Widget>[LembretePage(), CompromissoPage()],
           children: [
-            Center(child: Text('Lembretes')),
-            Center(child: Text('Compromissos')),
+            LembretePage(viewModel: lembreteViewModel),
+            const Center(child: Text('Compromissos')),
           ],
         ),
       ),

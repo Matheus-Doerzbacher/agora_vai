@@ -1,5 +1,6 @@
 import 'package:agora_vai/core/print_custom.dart';
 import 'package:agora_vai/data/service/api/client/api_client.dart';
+import 'package:agora_vai/data/service/api/model/lembrete/lembrete_create.dart';
 import 'package:agora_vai/domain/model/lembrete.dart';
 import 'package:result_dart/result_dart.dart';
 
@@ -23,6 +24,23 @@ class LembreteService {
     } catch (e) {
       _print
         ..error('Erro ao montar lista de lembretes')
+        ..error('Erro: $e');
+      return Failure(Exception(e));
+    }
+  }
+
+  AsyncResult<Lembrete> create(CreateLembrete createLembrete) async {
+    try {
+      final response = await _apiClient.post(
+        _path,
+        body: createLembrete.toMap(),
+      );
+      return response.fold((success) {
+        return Success(Lembrete.fromMap(success as Map<String, dynamic>));
+      }, Failure.new);
+    } catch (e) {
+      _print
+        ..error('Erro ao criar lembrete')
         ..error('Erro: $e');
       return Failure(Exception(e));
     }

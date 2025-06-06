@@ -1,9 +1,9 @@
-class LembreteCreate {
+class CreateLembrete {
   final String titulo;
   final String descricao;
   final bool isConcluido;
 
-  LembreteCreate({
+  CreateLembrete({
     required this.titulo,
     required this.descricao,
     required this.isConcluido,
