@@ -13,7 +13,6 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final lembreteViewModel = context.read<LembreteViewModel>();
     return DefaultTabController(
-      initialIndex: 1,
       length: 2,
       child: Scaffold(
         appBar: AppBar(
@@ -27,6 +26,8 @@ class HomePage extends StatelessWidget {
             ),
           ],
           bottom: const TabBar(
+            indicatorSize: TabBarIndicatorSize.tab,
+            indicatorPadding: EdgeInsets.symmetric(horizontal: 16),
             tabs: <Widget>[
               Tab(icon: Icon(Icons.task_alt), child: Text('Lembretes')),
               Tab(

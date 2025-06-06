@@ -16,4 +16,15 @@ class LembreteRepository {
   AsyncResult<Lembrete> create(CreateLembrete createLembrete) async {
     return _lembreteService.create(createLembrete);
   }
+
+  AsyncResult<Lembrete> update(
+    CreateLembrete createLembrete,
+    int idLembrete,
+  ) async {
+    return _lembreteService.update(createLembrete, idLembrete);
+  }
+
+  AsyncResult<Unit> delete(int idLembrete) async {
+    return _lembreteService.delete(idLembrete);
+  }
 }

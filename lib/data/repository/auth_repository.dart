@@ -28,11 +28,14 @@ class AuthRepository extends ChangeNotifier {
   Usuario? get usuarioLogado => _usuarioLogado;
 
   String? _authToken;
+  bool _isFetching = false;
 
   final _print = PrintCustom('AuthRepository');
 
-  /// Fetch token from shared preferences
   Future<void> _fetch() async {
+    if (_isFetching) return;
+
+    _isFetching = true;
     try {
       _print
         ..space()
@@ -47,6 +50,7 @@ class AuthRepository extends ChangeNotifier {
     } catch (e) {
       _print.error('Houve um problema ao realizar Fetch de Autenticação');
     } finally {
+      _isFetching = false;
       _print
         ..line()
         ..space();

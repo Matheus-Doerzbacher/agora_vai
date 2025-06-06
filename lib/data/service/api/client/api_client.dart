@@ -112,4 +112,85 @@ class ApiClient {
         ..space();
     }
   }
+
+  AsyncResult<dynamic> put(
+    String path, {
+    required Map<String, dynamic> body,
+    required int id,
+  }) async {
+    try {
+      _print
+        ..space()
+        ..title('INICIO DA REQUISIÇÃO PUT')
+        ..info('Path: $path/$id')
+        ..info('Body: $body')
+        ..info('Headers: $headers');
+
+      final uri = Uri.parse('$_baseUrl$path/$id');
+
+      _print.info('URI: $uri');
+
+      final response = await http.put(
+        uri,
+        body: jsonEncode(body),
+        headers: headers,
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        _print
+          ..success('Resposta: ${response.body}')
+          ..success('Requisição finalizada com sucesso');
+        return Success(jsonDecode(response.body));
+      } else {
+        _print
+          ..error('Requisição finalizada com erro: ${response.statusCode}')
+          ..error('Resposta: ${response.body}');
+        return Failure(Exception(response.body));
+      }
+    } on Exception catch (e) {
+      _print
+        ..error('Erro ao fazer a requisição')
+        ..error('Erro: $e');
+      return Failure(e);
+    } finally {
+      _print
+        ..line()
+        ..space();
+    }
+  }
+
+  AsyncResult<Unit> delete(String path, {required int id}) async {
+    try {
+      _print
+        ..space()
+        ..title('INICIO DA REQUISIÇÃO DELETE')
+        ..info('Path: $path/$id')
+        ..info('Headers: $headers');
+
+      final uri = Uri.parse('$_baseUrl$path/$id');
+      _print.info('URI: $uri');
+      final response = await http.delete(uri, headers: headers);
+
+      if (response.statusCode == 200 || response.statusCode == 204) {
+        _print
+          ..success('Resposta: ${response.body}')
+          ..success('Requisição finalizada com sucesso');
+        return const Success(unit);
+      } else {
+        _print
+          ..error('Requisição finalizada com erro: ${response.statusCode}')
+          ..error('Resposta: ${response.body}');
+        return Failure(Exception(response.body));
+      }
+    } on Exception catch (e) {
+      _print
+        ..error('Erro ao fazer a requisição')
+        ..error('Erro: $e');
+      return Failure(e);
+    } finally {
+      _print
+        ..line()
+        ..space();
+    }
+  }
 }

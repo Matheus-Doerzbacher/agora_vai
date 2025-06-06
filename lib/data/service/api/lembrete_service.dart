@@ -45,4 +45,29 @@ class LembreteService {
       return Failure(Exception(e));
     }
   }
+
+  AsyncResult<Lembrete> update(
+    CreateLembrete createLembrete,
+    int idLembrete,
+  ) async {
+    try {
+      final response = await _apiClient.put(
+        _path,
+        body: createLembrete.toMap(),
+        id: idLembrete,
+      );
+      return response.fold((success) {
+        return Success(Lembrete.fromMap(success as Map<String, dynamic>));
+      }, Failure.new);
+    } catch (e) {
+      _print
+        ..error('Erro ao criar lembrete')
+        ..error('Erro: $e');
+      return Failure(Exception(e));
+    }
+  }
+
+  AsyncResult<Unit> delete(int idLembrete) {
+    return _apiClient.delete(_path, id: idLembrete);
+  }
 }

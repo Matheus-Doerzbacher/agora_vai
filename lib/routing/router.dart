@@ -8,7 +8,6 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 GoRouter router(AuthRepository authRepository) => GoRouter(
-  initialLocation: Routes.home,
   debugLogDiagnostics: true,
   redirect: _redirect,
   refreshListenable: authRepository,
@@ -31,10 +30,10 @@ GoRouter router(AuthRepository authRepository) => GoRouter(
 );
 
 Future<String?> _redirect(BuildContext context, GoRouterState state) async {
-  final usuarioLogado = await context.read<AuthRepository>().isAuthenticated;
-
+  final isLoggedIn = await context.read<AuthRepository>().isAuthenticated;
   final loggingIn = state.matchedLocation == Routes.login;
-  if (!usuarioLogado) {
+
+  if (!isLoggedIn) {
     return Routes.login;
   }
 

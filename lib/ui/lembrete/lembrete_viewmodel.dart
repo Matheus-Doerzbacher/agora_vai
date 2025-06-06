@@ -19,18 +19,10 @@ class LembreteViewModel extends ChangeNotifier {
     getLembretes.execute();
   }
 
-  Future<void> _onAuthStateChanged() async {
-    final isAuthenticated = await _authRepository.isAuthenticated;
-    if (isAuthenticated) {
-      await getLembretes.execute();
-    } else {
-      _lembretes = [];
-      notifyListeners();
-    }
-  }
-
   late final createLembrete = Command1(_createLembrete);
   late final getLembretes = Command0(_getLembretes);
+  late final deleteLembrete = Command1(_deleteLembrete);
+  late final updateLembrete = Command2(_updateLembrete);
 
   List<Lembrete> _lembretes = [];
   List<Lembrete> get lembretes => _lembretes;
@@ -64,5 +56,57 @@ class LembreteViewModel extends ChangeNotifier {
     );
 
     return result;
+  }
+
+  AsyncResult<Unit> _updateLembrete(
+    CreateLembrete createLembrete,
+    int idLembrete,
+  ) async {
+    final result = await _lembreteRepository.update(createLembrete, idLembrete);
+
+    return result.fold(
+      (lembrete) {
+        final index = _lembretes.indexWhere(
+          (lembrete) => lembrete.idLembrete == idLembrete,
+        );
+        _lembretes[index] = lembrete;
+        notifyListeners();
+        return const Success(unit);
+      },
+      (failure) {
+        return Failure(failure);
+      },
+    );
+  }
+
+  AsyncResult<Unit> _deleteLembrete(int idLembrete) async {
+    final result = await _lembreteRepository.delete(idLembrete);
+
+    return result.fold(
+      (success) {
+        _lembretes.removeWhere((lembrete) => lembrete.idLembrete == idLembrete);
+        notifyListeners();
+        return const Success(unit);
+      },
+      (failure) {
+        return Failure(failure);
+      },
+    );
+  }
+
+  Future<void> _onAuthStateChanged() async {
+    final usuarioLogado = _authRepository.usuarioLogado;
+    if (usuarioLogado != null) {
+      await getLembretes.execute();
+    } else {
+      _lembretes = [];
+      notifyListeners();
+    }
+  }
+
+  @override
+  void dispose() {
+    _authRepository.removeListener(_onAuthStateChanged);
+    super.dispose();
   }
 }

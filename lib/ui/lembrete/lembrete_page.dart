@@ -14,12 +14,15 @@ class LembretePage extends StatefulWidget {
 class _LembretePageState extends State<LembretePage> {
   void _handleSubmit(CreateLembrete lembrete) {
     widget.viewModel.createLembrete.execute(lembrete);
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(const SnackBar(content: Text('Lembrete criado')));
+    Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Lembretes')),
       body: ListenableBuilder(
         listenable: Listenable.merge([
           widget.viewModel,
@@ -34,18 +37,71 @@ class _LembretePageState extends State<LembretePage> {
             return const Center(child: Text('Nenhum lembrete encontrado'));
           }
 
-          return ListView.builder(
-            itemCount: widget.viewModel.lembretes.length,
-            itemBuilder: (context, index) {
-              final lembrete = widget.viewModel.lembretes[index];
-              return ListTile(
-                title: Text(lembrete.titulo),
-                subtitle: Text(lembrete.descricao),
-                trailing: lembrete.isConcluido == true
-                    ? const Icon(Icons.check_circle, color: Colors.green)
-                    : const Icon(Icons.circle_outlined),
-              );
-            },
+          return Padding(
+            padding: const EdgeInsets.all(16),
+            child: ListView.builder(
+              itemCount: widget.viewModel.lembretes.length,
+              itemBuilder: (context, index) {
+                final lembrete = widget.viewModel.lembretes[index];
+                return Dismissible(
+                  key: Key(lembrete.idLembrete.toString()),
+                  background: Card(
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: Colors.red,
+                      ),
+                      child: const Row(
+                        children: [
+                          SizedBox(width: 16),
+                          Icon(Icons.delete, color: Colors.white),
+                          Text(
+                            'Deletar',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  direction: DismissDirection.startToEnd,
+                  onDismissed: (direction) {
+                    widget.viewModel.deleteLembrete.execute(
+                      lembrete.idLembrete,
+                    );
+                    ScaffoldMessenger.of(context)
+                      ..hideCurrentSnackBar()
+                      ..showSnackBar(
+                        const SnackBar(content: Text('Lembrete deletado')),
+                      );
+                  },
+                  child: Card(
+                    child: ListTile(
+                      title: Text(lembrete.titulo),
+                      subtitle: Text(lembrete.descricao),
+                      trailing: IconButton(
+                        onPressed: () {
+                          widget.viewModel.updateLembrete.execute(
+                            CreateLembrete(
+                              titulo: lembrete.titulo,
+                              descricao: lembrete.descricao,
+                              isConcluido: !lembrete.isConcluido,
+                            ),
+                            lembrete.idLembrete,
+                          );
+                        },
+                        icon: lembrete.isConcluido
+                            ? const Icon(
+                                Icons.check_circle,
+                                color: Colors.green,
+                              )
+                            : const Icon(Icons.circle_outlined),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
           );
         },
       ),
