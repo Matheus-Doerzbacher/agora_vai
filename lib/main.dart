@@ -1,11 +1,15 @@
 import 'package:agora_vai/config/provider.dart';
 import 'package:agora_vai/data/repository/auth_repository.dart';
+import 'package:agora_vai/data/service/noti_service.dart';
 import 'package:agora_vai/routing/router.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await NotiService().initNotification();
+
   runApp(MultiProvider(providers: providers, child: const MyApp()));
 }
 

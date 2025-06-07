@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:agora_vai/core/config/api_config.dart';
 import 'package:agora_vai/core/print_custom.dart';
 import 'package:agora_vai/data/service/api/model/auth/login_request.dart';
 import 'package:agora_vai/data/service/api/model/auth/login_response.dart';
@@ -7,7 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:result_dart/result_dart.dart';
 
 class AuthApiClient {
-  final _baseUrl = 'http://10.0.2.2:8080';
+  final _baseUrl = ApiConfig.baseUrl;
   final _path = '/api/auth/login';
 
   final _print = PrintCustom('AuthApiClient');

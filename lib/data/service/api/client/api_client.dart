@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:agora_vai/core/config/api_config.dart';
 import 'package:agora_vai/core/print_custom.dart';
 import 'package:http/http.dart' as http;
 import 'package:result_dart/result_dart.dart';
@@ -10,7 +11,7 @@ typedef AuthHeaderProvider = String? Function();
 
 class ApiClient {
   AuthHeaderProvider? authHeaderProvider;
-  final _baseUrl = 'http://10.0.2.2:8080';
+  final _baseUrl = ApiConfig.baseUrl;
 
   final _print = PrintCustom('ApiClient');
 
