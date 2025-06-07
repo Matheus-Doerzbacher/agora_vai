@@ -14,7 +14,8 @@ class _FormLembreteWidgetState extends State<FormLembreteWidget> {
   final _formKey = GlobalKey<FormState>();
   final _tituloController = TextEditingController();
   final _descricaoController = TextEditingController();
-  bool _isConcluida = false;
+  DateTime? _dataHora;
+  bool _adicionarAlerta = false;
 
   @override
   void dispose() {
@@ -24,11 +25,22 @@ class _FormLembreteWidgetState extends State<FormLembreteWidget> {
   }
 
   void _submitForm() {
+    if (_adicionarAlerta && _dataHora == null) {
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.red,
+            content: Text('Por favor, selecione uma data e hora'),
+          ),
+        );
+      return;
+    }
     if (_formKey.currentState!.validate()) {
       final lembrete = CreateLembrete(
         titulo: _tituloController.text,
         descricao: _descricaoController.text,
-        isConcluido: _isConcluida,
+        dataHora: _dataHora,
       );
 
       widget.onSubmit(lembrete);
@@ -74,15 +86,51 @@ class _FormLembreteWidgetState extends State<FormLembreteWidget> {
             ),
             const SizedBox(height: 16),
             SwitchListTile(
-              title: const Text('Concluído'),
-              value: _isConcluida,
+              title: const Text('Adicionar Alerta'),
+              value: _adicionarAlerta,
               onChanged: (value) {
                 setState(() {
-                  _isConcluida = value;
+                  _adicionarAlerta = value;
                 });
               },
             ),
             const SizedBox(height: 16),
+            if (_adicionarAlerta) ...[
+              ElevatedButton(
+                onPressed: () async {
+                  final pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime.now(),
+                    lastDate: DateTime(2026),
+                  );
+                  if (pickedDate != null) {
+                    final pickedTime = await showTimePicker(
+                      // ignore: use_build_context_synchronously
+                      context: context,
+                      initialTime: TimeOfDay.now(),
+                    );
+                    if (pickedTime != null) {
+                      setState(() {
+                        _dataHora = DateTime(
+                          pickedDate.year,
+                          pickedDate.month,
+                          pickedDate.day,
+                          pickedTime.hour,
+                          pickedTime.minute,
+                        );
+                      });
+                    }
+                  }
+                },
+                child: Text(
+                  _dataHora == null
+                      ? 'Selecionar Data e Hora'
+                      : 'Data e Hora: ${_dataHora!.day}/${_dataHora!.month}/${_dataHora!.year} ${_dataHora!.hour}:${_dataHora!.minute.toString().padLeft(2, '0')}',
+                ),
+              ),
+              const SizedBox(height: 16),
+            ],
             ElevatedButton(onPressed: _submitForm, child: const Text('Salvar')),
           ],
         ),

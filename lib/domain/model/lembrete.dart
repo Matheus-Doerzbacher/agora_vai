@@ -2,14 +2,14 @@ class Lembrete {
   final int idLembrete;
   final String titulo;
   final String descricao;
-  final DateTime dataCriacao;
+  final DateTime? dataHora;
   final bool isConcluido;
 
   Lembrete({
     required this.idLembrete,
     required this.titulo,
     required this.descricao,
-    required this.dataCriacao,
+    this.dataHora,
     required this.isConcluido,
   });
 
@@ -18,7 +18,9 @@ class Lembrete {
       idLembrete: json['idLembrete'] as int,
       titulo: json['titulo'] as String,
       descricao: json['descricao'] as String,
-      dataCriacao: DateTime.parse(json['dataCriacao'] as String),
+      dataHora: json['dataHora'] != null
+          ? DateTime.parse(json['dataHora'] as String)
+          : null,
       isConcluido: json['isConcluido'] as bool,
     );
   }

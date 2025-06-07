@@ -51,17 +51,19 @@ class ApiClient {
       if (response.statusCode == 200) {
         _print
           ..success('Resposta: ${response.body}')
-          ..success('Requisição finalizada com sucesso');
+          ..success('Requisição GET $path finalizada com sucesso');
         return Success(jsonDecode(response.body));
       } else {
         _print
-          ..error('Requisição finalizada com erro: ${response.statusCode}')
+          ..error(
+            'Requisição GET $path finalizada com erro: ${response.statusCode}',
+          )
           ..error('Resposta: ${response.body}');
         return Failure(Exception(response.body));
       }
     } on Exception catch (e) {
       _print
-        ..error('Erro ao fazer a requisição')
+        ..error('Erro ao fazer a requisição GET $path')
         ..error('Erro: $e');
       return Failure(e);
     } finally {
@@ -93,17 +95,19 @@ class ApiClient {
       if (response.statusCode == 200 || response.statusCode == 201) {
         _print
           ..success('Resposta: ${response.body}')
-          ..success('Requisição finalizada com sucesso');
+          ..success('Requisição POST $path finalizada com sucesso');
         return Success(jsonDecode(response.body));
       } else {
         _print
-          ..error('Requisição finalizada com erro: ${response.statusCode}')
+          ..error(
+            'Requisição POST $path finalizada com erro: ${response.statusCode}',
+          )
           ..error('Resposta: ${response.body}');
         return Failure(Exception(response.body));
       }
     } on Exception catch (e) {
       _print
-        ..error('Erro ao fazer a requisição')
+        ..error('Erro ao fazer a requisição POST $path')
         ..error('Erro: $e');
       return Failure(e);
     } finally {
@@ -139,17 +143,19 @@ class ApiClient {
       if (response.statusCode == 200 || response.statusCode == 201) {
         _print
           ..success('Resposta: ${response.body}')
-          ..success('Requisição finalizada com sucesso');
+          ..success('Requisição PUT $path/$id finalizada com sucesso');
         return Success(jsonDecode(response.body));
       } else {
         _print
-          ..error('Requisição finalizada com erro: ${response.statusCode}')
+          ..error(
+            'Requisição PUT $path/$id finalizada com erro: ${response.statusCode}',
+          )
           ..error('Resposta: ${response.body}');
         return Failure(Exception(response.body));
       }
     } on Exception catch (e) {
       _print
-        ..error('Erro ao fazer a requisição')
+        ..error('Erro ao fazer a requisição PUT $path/$id')
         ..error('Erro: $e');
       return Failure(e);
     } finally {
@@ -174,17 +180,19 @@ class ApiClient {
       if (response.statusCode == 200 || response.statusCode == 204) {
         _print
           ..success('Resposta: ${response.body}')
-          ..success('Requisição finalizada com sucesso');
+          ..success('Requisição DELETE $path/$id finalizada com sucesso');
         return const Success(unit);
       } else {
         _print
-          ..error('Requisição finalizada com erro: ${response.statusCode}')
+          ..error(
+            'Requisição DELETE $path/$id finalizada com erro: ${response.statusCode}',
+          )
           ..error('Resposta: ${response.body}');
         return Failure(Exception(response.body));
       }
     } on Exception catch (e) {
       _print
-        ..error('Erro ao fazer a requisição')
+        ..error('Erro ao fazer a requisição DELETE $path/$id')
         ..error('Erro: $e');
       return Failure(e);
     } finally {

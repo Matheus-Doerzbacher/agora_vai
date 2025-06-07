@@ -78,13 +78,27 @@ class _LembretePageState extends State<LembretePage> {
                   child: Card(
                     child: ListTile(
                       title: Text(lembrete.titulo),
-                      subtitle: Text(lembrete.descricao),
-                      trailing: IconButton(
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [Text(lembrete.descricao)],
+                      ),
+                      trailing: lembrete.dataHora != null
+                          ? Container(
+                              width: 120,
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                '${lembrete.dataHora!.day}/${lembrete.dataHora!.month}/${lembrete.dataHora!.year} ${lembrete.dataHora!.hour}:${lembrete.dataHora!.minute.toString().padLeft(2, '0')}',
+                                style: const TextStyle(fontSize: 14),
+                              ),
+                            )
+                          : null,
+                      leading: IconButton(
                         onPressed: () {
                           widget.viewModel.updateLembrete.execute(
                             CreateLembrete(
                               titulo: lembrete.titulo,
                               descricao: lembrete.descricao,
+                              dataHora: lembrete.dataHora,
                               isConcluido: !lembrete.isConcluido,
                             ),
                             lembrete.idLembrete,
