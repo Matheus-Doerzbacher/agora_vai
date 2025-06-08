@@ -37,9 +37,7 @@ class AuthRepository extends ChangeNotifier {
 
     _isFetching = true;
     try {
-      _print
-        ..space()
-        ..title('Realizando Fetch de Autenticação');
+      _print.title('Realizando Fetch de Autenticação');
 
       final token = await _sharedPreferencesService.get(_tokenKey).getOrThrow();
       _authToken = token;
@@ -51,9 +49,7 @@ class AuthRepository extends ChangeNotifier {
       _print.error('Houve um problema ao realizar Fetch de Autenticação');
     } finally {
       _isFetching = false;
-      _print
-        ..line()
-        ..space();
+      _print.line();
     }
   }
 

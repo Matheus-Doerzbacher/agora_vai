@@ -20,6 +20,7 @@ class PrintCustom {
 
   void title(String message) {
     if (kDebugMode) {
+      print('');
       print('[$_className]: $_yellow===== $message =====$_reset');
     }
   }
@@ -42,12 +43,6 @@ class PrintCustom {
         // ignore: lines_longer_than_80_chars
         '[$_className]: $_yellow==================================================$_reset',
       );
-    }
-  }
-
-  void space() {
-    if (kDebugMode) {
-      print('');
     }
   }
 }

@@ -8,7 +8,6 @@ class SharedPreferencesService {
   AsyncResult<String> get(String key) async {
     try {
       _print
-        ..space()
         ..title('Buscando dados do SharedPreferences')
         ..info('Key: $key');
       final sharedPreferences = await SharedPreferences.getInstance();
@@ -27,16 +26,13 @@ class SharedPreferencesService {
       _print.error('Houve um problema ao buscar dados do SharedPreferences');
       return Failure(Exception(e));
     } finally {
-      _print
-        ..line()
-        ..space();
+      _print.line();
     }
   }
 
   AsyncResult<String> save(String key, String value) async {
     try {
       _print
-        ..space()
         ..title('Salvando dados no SharedPreferences')
         ..info('Key: $key')
         ..info('Value: $value');
@@ -52,16 +48,13 @@ class SharedPreferencesService {
       _print.error('Houve um problema ao salvar dados no SharedPreferences');
       return Failure(Exception(e));
     } finally {
-      _print
-        ..line()
-        ..space();
+      _print.line();
     }
   }
 
   AsyncResult<Unit> remove(String key) async {
     try {
       _print
-        ..space()
         ..title('Removendo dados do SharedPreferences')
         ..info('Key: $key');
       final sharedPreferences = await SharedPreferences.getInstance();
@@ -76,9 +69,7 @@ class SharedPreferencesService {
       _print.error('Houve um problema ao remover dados do SharedPreferences');
       return Failure(Exception(e));
     } finally {
-      _print
-        ..line()
-        ..space();
+      _print.line();
     }
   }
 }

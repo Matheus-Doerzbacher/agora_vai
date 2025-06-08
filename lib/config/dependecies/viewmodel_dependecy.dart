@@ -19,12 +19,14 @@ List<SingleChildWidget> viewmodelProviders = [
     create: (context) => LembreteViewModel(
       lembreteRepository: context.read(),
       authRepository: context.read(),
+      notiRepository: context.read(),
     ),
   ),
   ChangeNotifierProvider(
     create: (context) => CompromissoViewModel(
       compromissoRepository: context.read(),
       authRepository: context.read(),
+      notiRepository: context.read(),
     ),
   ),
 ];

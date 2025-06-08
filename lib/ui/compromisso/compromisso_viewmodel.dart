@@ -1,7 +1,13 @@
+import 'dart:async';
+
+import 'package:agora_vai/core/compara_datas.dart';
+import 'package:agora_vai/core/print_custom.dart';
 import 'package:agora_vai/data/repository/auth_repository.dart';
 import 'package:agora_vai/data/repository/compromisso_repository.dart';
+import 'package:agora_vai/data/repository/noti_repository.dart';
 import 'package:agora_vai/data/service/api/model/compromisso/compromisso_created.dart';
 import 'package:agora_vai/domain/model/compromisso.dart';
+import 'package:agora_vai/domain/model/notificacao.dart';
 import 'package:flutter/material.dart';
 import 'package:result_command/result_command.dart';
 import 'package:result_dart/result_dart.dart';
@@ -9,14 +15,71 @@ import 'package:result_dart/result_dart.dart';
 class CompromissoViewModel extends ChangeNotifier {
   final CompromissoRepository _compromissoRepository;
   final AuthRepository _authRepository;
+  final NotiRepository _notiRepository;
 
   CompromissoViewModel({
     required CompromissoRepository compromissoRepository,
     required AuthRepository authRepository,
+    required NotiRepository notiRepository,
   }) : _compromissoRepository = compromissoRepository,
-       _authRepository = authRepository {
+       _authRepository = authRepository,
+       _notiRepository = notiRepository {
     _authRepository.addListener(_onAuthStateChanged);
     getCompromissos.execute();
+    _iniciarVerificacaoCompromissos();
+  }
+
+  final _print = PrintCustom('CompromissoViewModel');
+
+  Timer? _timer;
+  void _iniciarVerificacaoCompromissos() {
+    _timer?.cancel();
+
+    // Calcula o tempo até o próximo minuto
+    final now = DateTime.now();
+    final nextMinute = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      now.hour,
+      now.minute + 1,
+      1, // Força o segundo 1
+    );
+    final delay = nextMinute.difference(now);
+
+    // Agenda o primeiro timer para começar no próximo minuto
+    Future.delayed(delay, () {
+      _verificarCompromissos();
+
+      // Depois inicia o timer periódico
+      _timer = Timer.periodic(const Duration(minutes: 1), (timer) {
+        _verificarCompromissos();
+      });
+    });
+  }
+
+  Future<void> _verificarCompromissos() async {
+    _print
+      ..title('Iniciando verificação de compromissos')
+      ..info('Hora atual: ${DateTime.now()}');
+
+    for (final compromisso in _compromissos) {
+      if (comparaDatas(DateTime.now(), compromisso.dataHoraInicio)) {
+        _print
+          ..success('Compromisso encontrado')
+          ..success('Compromisso: ${compromisso.descricao}');
+        await _notiRepository.showNotification(
+          Notificacao(
+            id: compromisso.idCompromisso,
+            title: compromisso.titulo,
+            body: compromisso.descricao,
+          ),
+        );
+      }
+    }
+    _print
+      ..info('Verificação de compromissos finalizada')
+      ..line();
   }
 
   late final createCompromisso = Command1(_createCompromisso);

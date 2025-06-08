@@ -1,5 +1,4 @@
 import 'package:agora_vai/data/repository/auth_repository.dart';
-import 'package:agora_vai/data/service/noti_service.dart';
 import 'package:agora_vai/ui/auth/logout/logout_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -56,19 +55,6 @@ class _UserPageState extends State<UserPage> {
             ),
             const SizedBox(height: 20),
             Center(child: LogoutButton(viewModel: context.read())),
-            const SizedBox(height: 20),
-            Center(
-              child: ElevatedButton(
-                onPressed: () async {
-                  await Future.delayed(const Duration(seconds: 5));
-                  await NotiService().showNotification(
-                    title: 'Teste de Notificação',
-                    body: 'Esta é uma notificação de teste',
-                  );
-                },
-                child: const Text('Mostrar Notificação'),
-              ),
-            ),
           ],
         ),
       ),

@@ -36,7 +36,6 @@ class ApiClient {
   }) async {
     try {
       _print
-        ..space()
         ..title('INICIO DA REQUISIÇÃO GET')
         ..info('Path: $path')
         ..info('Query Parameters: $queryParameters')
@@ -68,16 +67,13 @@ class ApiClient {
         ..error('Erro: $e');
       return Failure(e);
     } finally {
-      _print
-        ..line()
-        ..space();
+      _print.line();
     }
   }
 
   AsyncResult<dynamic> post(String path, {Map<String, dynamic>? body}) async {
     try {
       _print
-        ..space()
         ..title('INICIO DA REQUISIÇÃO POST')
         ..info('Path: $path')
         ..info('Body: $body')
@@ -112,9 +108,7 @@ class ApiClient {
         ..error('Erro: $e');
       return Failure(e);
     } finally {
-      _print
-        ..line()
-        ..space();
+      _print.line();
     }
   }
 
@@ -125,7 +119,6 @@ class ApiClient {
   }) async {
     try {
       _print
-        ..space()
         ..title('INICIO DA REQUISIÇÃO PUT')
         ..info('Path: $path/$id')
         ..info('Body: $body')
@@ -160,16 +153,13 @@ class ApiClient {
         ..error('Erro: $e');
       return Failure(e);
     } finally {
-      _print
-        ..line()
-        ..space();
+      _print.line();
     }
   }
 
   AsyncResult<Unit> delete(String path, {required int id}) async {
     try {
       _print
-        ..space()
         ..title('INICIO DA REQUISIÇÃO DELETE')
         ..info('Path: $path/$id')
         ..info('Headers: $headers');
@@ -197,9 +187,7 @@ class ApiClient {
         ..error('Erro: $e');
       return Failure(e);
     } finally {
-      _print
-        ..line()
-        ..space();
+      _print.line();
     }
   }
 }

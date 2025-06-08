@@ -21,7 +21,6 @@ class AuthApiClient {
   AsyncResult<LoginResponse> post(LoginRequest loginRequest) async {
     try {
       _print
-        ..space()
         ..title('INICIO DA REQUISIÇÃO DE LOGIN')
         ..info('Path: $_path')
         ..info('Body: ${loginRequest.toMap()}')
@@ -56,9 +55,7 @@ class AuthApiClient {
         ..error('Erro: $e');
       return Failure(Exception(e));
     } finally {
-      _print
-        ..line()
-        ..space();
+      _print.line();
     }
   }
 }
