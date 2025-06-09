@@ -90,6 +90,8 @@ class _LoginPageState extends State<LoginPage> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
+                        const FlutterLogo(size: 100),
+                        const SizedBox(height: 16),
                         Text(
                           _isCreated ? 'Criar usuário' : 'Login',
                           style: Theme.of(context).textTheme.titleLarge,

@@ -131,7 +131,7 @@ class _FormLembreteWidgetState extends State<FormLembreteWidget> {
               ),
               const SizedBox(height: 16),
             ],
-            ElevatedButton(onPressed: _submitForm, child: const Text('Salvar')),
+            FilledButton(onPressed: _submitForm, child: const Text('Salvar')),
           ],
         ),
       ),

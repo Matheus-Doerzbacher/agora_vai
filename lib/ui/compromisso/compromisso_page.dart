@@ -110,22 +110,24 @@ class _CompromissoPageState extends State<CompromissoPage> {
         onPressed: () {
           showDialog(
             context: context,
-            builder: (context) => Dialog(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Text(
-                      'Novo Compromisso',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+            builder: (context) => SingleChildScrollView(
+              child: Dialog(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text(
+                        'Novo Compromisso',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 16),
-                    FormCompromissoWidget(onSubmit: _handleSubmit),
-                  ],
+                      const SizedBox(height: 16),
+                      FormCompromissoWidget(onSubmit: _handleSubmit),
+                    ],
+                  ),
                 ),
               ),
             ),
