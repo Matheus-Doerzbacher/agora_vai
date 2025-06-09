@@ -131,7 +131,19 @@ class _FormLembreteWidgetState extends State<FormLembreteWidget> {
               ),
               const SizedBox(height: 16),
             ],
-            FilledButton(onPressed: _submitForm, child: const Text('Salvar')),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                FilledButton(
+                  onPressed: _submitForm,
+                  child: const Text('Salvar'),
+                ),
+                OutlinedButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('Cancelar'),
+                ),
+              ],
+            ),
           ],
         ),
       ),

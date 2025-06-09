@@ -68,50 +68,54 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListenableBuilder(
-        listenable: Listenable.merge([
-          widget.viewModel.login,
-          widget.viewModel.createUser,
-        ]),
-        builder: (context, _) {
-          final isRunning =
-              widget.viewModel.login.isRunning ||
-              widget.viewModel.createUser.isRunning;
+      body: SafeArea(
+        child: ListenableBuilder(
+          listenable: Listenable.merge([
+            widget.viewModel.login,
+            widget.viewModel.createUser,
+          ]),
+          builder: (context, _) {
+            final isRunning =
+                widget.viewModel.login.isRunning ||
+                widget.viewModel.createUser.isRunning;
 
-          return Form(
-            key: _formKey,
-            child: Center(
-              child: SizedBox(
-                width: 500,
-                child: Card(
-                  margin: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const FlutterLogo(size: 100),
-                        const SizedBox(height: 16),
-                        Text(
-                          _isCreated ? 'Criar usuário' : 'Login',
-                          style: Theme.of(context).textTheme.titleLarge,
+            return Form(
+              key: _formKey,
+              child: Center(
+                child: SizedBox(
+                  width: 500,
+                  child: SingleChildScrollView(
+                    child: Card(
+                      margin: const EdgeInsets.symmetric(horizontal: 24),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const FlutterLogo(size: 100),
+                            const SizedBox(height: 16),
+                            Text(
+                              _isCreated ? 'Criar usuário' : 'Login',
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                            const SizedBox(height: 16),
+                            if (_isCreated) _buildFormNome(),
+                            _buildFormEmail(),
+                            _buildFormPassword(),
+                            if (_isCreated) _buildFormConfirmPassword(),
+                            const SizedBox(height: 16),
+                            _buildButton(isRunning),
+                            _buildTextButton(isRunning),
+                          ],
                         ),
-                        const SizedBox(height: 16),
-                        if (_isCreated) _buildFormNome(),
-                        _buildFormEmail(),
-                        _buildFormPassword(),
-                        if (_isCreated) _buildFormConfirmPassword(),
-                        const SizedBox(height: 16),
-                        _buildButton(isRunning),
-                        _buildTextButton(isRunning),
-                      ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
