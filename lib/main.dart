@@ -9,6 +9,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await NotiService().initNotification();
+  await NotiService().requestPermissions();
 
   runApp(MultiProvider(providers: providers, child: const MyApp()));
 }

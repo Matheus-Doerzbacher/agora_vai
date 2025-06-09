@@ -43,7 +43,7 @@ class CompromissoViewModel extends ChangeNotifier {
       now.day,
       now.hour,
       now.minute + 1,
-      1, // Força o segundo 1
+      5, // Força o segundo 5
     );
     final delay = nextMinute.difference(now);
 

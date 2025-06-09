@@ -78,23 +78,25 @@ class _CompromissoPageState extends State<CompromissoPage> {
                   child: Card(
                     child: ListTile(
                       title: Text(compromisso.titulo),
-                      subtitle: Text(compromisso.descricao),
-                      trailing: Container(
-                        width: 120,
-                        alignment: Alignment.centerRight,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              '${compromisso.dataHoraInicio.day}/${compromisso.dataHoraInicio.month}/${compromisso.dataHoraInicio.year} ${compromisso.dataHoraInicio.hour}:${compromisso.dataHoraInicio.minute.toString().padLeft(2, '0')}',
-                              style: const TextStyle(fontSize: 14),
-                            ),
-                            Text(
-                              '${compromisso.dataHoraFim.day}/${compromisso.dataHoraFim.month}/${compromisso.dataHoraFim.year} ${compromisso.dataHoraFim.hour}:${compromisso.dataHoraFim.minute.toString().padLeft(2, '0')}',
-                              style: const TextStyle(fontSize: 14),
-                            ),
-                          ],
-                        ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(compromisso.descricao),
+                          Text('Local: ${compromisso.local}'),
+                        ],
+                      ),
+                      trailing: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            '${compromisso.dataHoraInicio.day}/${compromisso.dataHoraInicio.month}/${compromisso.dataHoraInicio.year} ${compromisso.dataHoraInicio.hour}:${compromisso.dataHoraInicio.minute.toString().padLeft(2, '0')}',
+                            style: const TextStyle(fontSize: 14),
+                          ),
+                          Text(
+                            '${compromisso.dataHoraFim.day}/${compromisso.dataHoraFim.month}/${compromisso.dataHoraFim.year} ${compromisso.dataHoraFim.hour}:${compromisso.dataHoraFim.minute.toString().padLeft(2, '0')}',
+                            style: const TextStyle(fontSize: 14),
+                          ),
+                        ],
                       ),
                     ),
                   ),
