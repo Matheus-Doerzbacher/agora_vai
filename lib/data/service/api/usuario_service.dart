@@ -49,4 +49,14 @@ class UsuarioService {
       return Failure(Exception(e));
     }
   }
+
+  AsyncResult<Unit> delete(int idUsuario) async {
+    try {
+      final result = await _apiClient.delete(_path, id: idUsuario);
+      return result.fold((success) => const Success(unit), Failure.new);
+    } catch (e) {
+      _print.error('Erro ao deletar usuário: $e');
+      return Failure(Exception(e));
+    }
+  }
 }

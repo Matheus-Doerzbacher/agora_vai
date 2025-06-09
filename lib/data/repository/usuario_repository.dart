@@ -12,4 +12,8 @@ class UsuarioRepository {
   AsyncResult<Usuario> createUser(UsuarioCreate usuario) async {
     return _usuarioService.create(usuario);
   }
+
+  AsyncResult<Unit> deleteUser(int idUsuario) async {
+    return _usuarioService.delete(idUsuario);
+  }
 }
